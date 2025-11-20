@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question-block {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="timer">Time Left: 30s</h2>
+
+    <form id="quizForm">
+
+        <!-- Quiz questions will be inserted here by quiz.js -->
+        <div id="quiz"></div>
+
+        <button type="submit">Submit Quiz</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <!-- Link JS file -->
+    <script src="quiz.js"></script>
+
+    <!-- Link css-->
+     <link rel="stylesheet" href="style.css">
+</body>
+</html>
