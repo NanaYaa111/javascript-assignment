@@ -129,11 +129,21 @@ document.getElementById("submitBtn").onclick = () => {
 function showResults() {
     clearInterval(overallTimer);
 
+    // Check score to decide which message to show
+    let message = "";
+    if (score === questions.length) {
+        message = "<br><strong>🎉 Congratulations! You got all of them right!</strong>";
+    } else {
+        // --- THIS IS THE NEW ENCOURAGEMENT MESSAGE ---
+        message = "<br><strong>Don't give up! Keep practicing! 💪</strong>";
+    }
+
     let html = `
         <div class="result-box">
             <h2>Your Score</h2>
             <h1>${score} / ${questions.length}</h1>
             <p>Scroll down to review all answers</p>
+            ${message}
         </div>
     `;
 
