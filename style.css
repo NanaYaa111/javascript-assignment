@@ -132,6 +132,22 @@ body {
     background: #4338ca;
 }
 
+/* Restart button shown on results screen */
+#restartBtn {
+    width: 48%;
+    padding: 12px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#restartBtn:hover { background: #059669; }
+
+.dark #restartBtn { background: #059669; }
+
 /* Results Page */
 .result-box {
     text-align: center;

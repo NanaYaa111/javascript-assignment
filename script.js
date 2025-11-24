@@ -144,6 +144,9 @@ function showResults() {
             <h1>${score} / ${questions.length}</h1>
             <p>Scroll down to review all answers</p>
             ${message}
+            <div style="margin-top:12px;">
+                <button id="restartBtn">Restart Quiz</button>
+            </div>
         </div>
     `;
 
@@ -162,6 +165,10 @@ function showResults() {
     });
 
     document.querySelector(".container").innerHTML = html;
+
+    // Wire up the restart button (if present) to restart the quiz
+    const restartBtn = document.getElementById('restartBtn');
+    if (restartBtn) restartBtn.onclick = restartQuiz;
 }
 
 /* DARK MODE */
@@ -170,3 +177,49 @@ document.getElementById("darkToggle").onclick = () => {
 };
 
 loadQuestion();
+
+/* Restart Quiz: resets state and restarts the existing timer. */
+function restartQuiz() {
+    // Reset quiz state
+    index = 0;
+    score = 0;
+    selected = null;
+    userAnswers = [];
+
+    // Stop existing timer and reset the global timer value
+    clearInterval(overallTimer);
+    // reset totalSeconds to original 120 seconds (adjust if you prefer 30)
+    totalSeconds = 120;
+
+    // Start timer again using the same formatting used earlier
+    overallTimer = setInterval(() => {
+        totalSeconds--;
+
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = totalSeconds % 60;
+        const timerEl = document.getElementById("timer");
+        if (timerEl) timerEl.textContent = `${mins}:${secs < 10 ? "0" + secs : secs}`;
+
+        if (totalSeconds <= 0) showResults();
+    }, 1000);
+
+    // Re-enable submit button if present
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) submitBtn.disabled = false;
+
+    // If the quiz UI was replaced by results (showResults replaced .container innerHTML),
+    // reloading page is the simplest safe way to restore the original DOM.
+    if (!document.getElementById('questionTitle') || !document.getElementById('options')) {
+        location.reload();
+        return;
+    }
+
+    // Clear any result messages and selected styles then reload first question
+    const resultBox = document.querySelector('.result-box');
+    if (resultBox) resultBox.remove();
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+
+    // Load first question
+    loadQuestion();
+}
+
